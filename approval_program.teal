@@ -1,0 +1,33 @@
+#pragma version 4
+txn ApplicationID
+int 0
+==
+bnz main_l7
+txna ApplicationArgs 0
+byte "card"
+==
+bnz main_l3
+err
+main_l3:
+txna ApplicationArgs 1
+btoi
+int 650
+>
+bnz main_l6
+byte "approval"
+byte "No"
+btoi
+app_global_put
+main_l5:
+int 1
+b main_l8
+main_l6:
+byte "approval"
+byte "Yes"
+btoi
+app_global_put
+b main_l5
+main_l7:
+int 1
+main_l8:
+return
